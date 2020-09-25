@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Partido } from '../models/partido';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
+  public partidos: Array<Partido> = [];
 
-  constructor() {}
+  constructor(public apiService: ApiService) {}
 
+  ngOnInit() {
+    this.apiService.getPartidos().subscribe((res) => {
+      this.partidos = res.dados;
+    });
+  }
 }
