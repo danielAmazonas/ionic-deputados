@@ -5,6 +5,12 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      (ionInput)="search($event.target.value)"
+      (ionClear)="clear()"
+    ></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>

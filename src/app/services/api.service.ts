@@ -11,8 +11,10 @@ export class ApiService {
   public url: string = environment.baseUrl;
   constructor(public httpClient: HttpClient) {}
 
-  public getPartidos(): Observable<ResponseApi> {
-    return this.httpClient.get<ResponseApi>(this.url + 'partidos');
+  public getPartidos(page: number): Observable<ResponseApi> {
+    return this.httpClient.get<ResponseApi>(
+      this.url + 'partidos?pagina=' + page
+    );
   }
 
   public getMembros(id: number): Observable<ResponseApi> {
