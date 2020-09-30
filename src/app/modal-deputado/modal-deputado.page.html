@@ -9,4 +9,21 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-row class="ion-align-items-center" *ngIf="finish">
+    <ion-col>
+      <ion-card class="card">
+        <img [src]="deputado.ultimoStatus.urlFoto" />
+        <ion-card-header>
+          <ion-card-subtitle>{{deputado.ultimoStatus.nome}}</ion-card-subtitle>
+          <ion-card-title
+            >{{deputado.ultimoStatus.siglaPartido}}</ion-card-title
+          >
+        </ion-card-header>
+        <ion-card-content>
+          {{deputado.ultimoStatus.gabinete.email}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
