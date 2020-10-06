@@ -37,4 +37,14 @@ export class Tab2Page implements OnInit {
     await this.comidaService.remover(id);
     this.getComidas();
   }
+
+  public async editar(id: number) {
+    const modal = await this.modal.create({
+      component: ModalComidaPage,
+      componentProps: {
+        id,
+      },
+    });
+    return await modal.present();
+  }
 }
