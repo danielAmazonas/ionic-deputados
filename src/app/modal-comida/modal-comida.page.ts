@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ComidaService } from '../services/comida.service';
 
@@ -11,12 +11,14 @@ import { ComidaService } from '../services/comida.service';
 export class ModalComidaPage implements OnInit {
   @Input() id: number;
   public isEdit: boolean = false;
+  public carregando: any = null;
 
   public form: FormGroup;
   constructor(
     public modal: ModalController,
     public formBuilder: FormBuilder,
-    public comidaService: ComidaService
+    public comidaService: ComidaService,
+    public loading: LoadingController
   ) {
     this.form = formBuilder.group({
       nome: [''],
@@ -39,12 +41,25 @@ export class ModalComidaPage implements OnInit {
     this.modal.dismiss();
   }
 
-  public submitForm() {
-    this.comidaService.salvarComida(this.form.value, this.id);
+  public async submitForm() {
+    await this.showCarregando();
+    await this.comidaService.salvarComida(this.form.value, this.id);
+    await this.fecharCarregando();
   }
 
   public async editar(id: number) {
     const comida = await this.comidaService.getComida(id);
     this.form.patchValue(comida);
+  }
+
+  async showCarregando() {
+    this.carregando = await this.loading.create({
+      message: 'Aguarde...',
+    });
+    await this.carregando.present();
+  }
+
+  async fecharCarregando() {
+    await this.carregando.dismiss();
   }
 }
